@@ -13,3 +13,12 @@ class Prestamo(Base):
 
     usuario = relationship("Usuario", back_populates="prestamos")
     ejemplar = relationship("Ejemplar", back_populates="prestamos")
+
+class HistoricoPrestamo(Base):
+    __tablename__ = "historico_prestamos"
+
+    id = Column(Integer, primary_key=True)
+    usuario_id = Column(Integer, ForeignKey("usuarios.id"))
+    ejemplar_id = Column(Integer, ForeignKey("ejemplares.id"))
+    fecha_prestamo = Column(Date)
+    fecha_devolucion = Column(Date)

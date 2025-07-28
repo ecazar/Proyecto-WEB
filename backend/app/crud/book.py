@@ -20,3 +20,15 @@ async def create_recomendacion(db: AsyncSession, rec_data: RecomendacionCreate):
     await db.commit()
     await db.refresh(recomendacion)
     return recomendacion
+
+async def get_all_libros(db: AsyncSession):
+    result = await db.execute(select(Libro))
+    return result.scalars().all()
+
+async def get_libro_by_id(db: AsyncSession, id: int):
+    result = await db.execute(select(Libro).where(Libro.id == id))
+    return result.scalars().first()
+
+async def get_recomendaciones_por_libro(db: AsyncSession, libro_id: int):
+    result = await db.execute(select(Recomendacion).where(Recomendacion.origen_id == libro_id))
+    return result.scalars().all()

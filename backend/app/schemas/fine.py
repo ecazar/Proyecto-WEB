@@ -22,9 +22,3 @@ class HistoricoMulta(BaseModel):
     fecha_inicio: date
     fecha_fin: date
     dias_acumulados: int
-
-class HistoricoPrestamo(BaseModel):
-    usuario_id: int
-    ejemplar_id: int
-    fecha_prestamo: date
-    fecha_devolucion: date

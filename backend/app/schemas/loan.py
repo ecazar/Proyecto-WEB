@@ -17,3 +17,15 @@ class PrestamoOut(PrestamoBase):
 
     class Config:
         orm_mode = True
+
+class HistoricoPrestamo(BaseModel):
+    usuario_id: int
+    ejemplar_id: int
+    fecha_prestamo: date
+    fecha_devolucion: date
+
+class HistoricoPrestamoOut(HistoricoPrestamo):
+    id: int
+
+    class Config:
+        from_attributes = True
