@@ -10,7 +10,7 @@ app = FastAPI(title="Sistema de Biblioteca")
 app.include_router(user.router, prefix="/usuarios", tags=["Usuarios"])
 app.include_router(book.router, prefix="/libros", tags=["Libros"])
 app.include_router(copy.router, prefix="/ejemplares", tags=["Ejemplares"])
-app.include_router(loan.router, prefix="/prestamos", tags=["Prestamos"])
+app.include_router(loan.router, prefix="/prestamos", tags=["Préstamos"])
 app.include_router(fine.router, prefix="/multas", tags=["Multas"])
 
 @app.get("/")
