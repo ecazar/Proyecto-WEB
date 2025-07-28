@@ -1,6 +1,8 @@
 ﻿from sqlalchemy import Column, Integer, String, Enum, ForeignKey
 from sqlalchemy.orm import relationship
 from app.db.base import Base
+from pydantic import BaseModel
+from typing import Optional
 from app.schemas.common import Direccion as DireccionSchema
 
 import enum
@@ -58,3 +60,8 @@ class Profesor(Base):
     departamento = Column(String, nullable=True)
 
     usuario = relationship("Usuario", back_populates="profesor")
+
+class UsuarioToken(BaseModel):
+    id: int
+    login: str
+    rol: str

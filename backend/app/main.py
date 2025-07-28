@@ -2,7 +2,7 @@
 from fastapi import FastAPI
 from app.api import user, book, copy, loan, fine
 from app.db.session import engine
-from app.db.base import Base  
+from app.db.base import Base
 import asyncio
 
 app = FastAPI(title="Sistema de Biblioteca")
