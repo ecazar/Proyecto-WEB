@@ -77,7 +77,7 @@ Convertirnos en el sistema de gestión bibliotecaria más confiable y utilizado 
 ## 💡 Cómo Ejecutar
 
 1. Clona el repositorio:
-   ```bash
+   ```
    git clone https://github.com/tuusuario/bibliotek-one.git
    cd bibliotek-one
 
@@ -104,18 +104,18 @@ http://localhost:8000/docs
 Instalar dentro del entorno virtual:
 ```
 pip install fastapi uvicorn sqlalchemy psycopg2-binary python-dotenv
-
 pip install -r requirements.txt
-
 pip install "pydantic<2"
 pip install pydantic-settings
 pip install python-jose
 pip install requests
 ```
 ### Dependencias Frontend
+```
 npm install react-router-dom
 npm install axios
 npm install @mui/material @emotion/react @emotion/styled
+```
 
 ## 🧠 Contribuciones
 ¡Las contribuciones son bienvenidas! Si deseas proponer mejoras, por favor abre un issue o haz un pull request.
