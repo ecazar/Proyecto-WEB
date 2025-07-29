@@ -100,7 +100,9 @@ Abre tu navegador en:
 http://localhost:8000/docs
 
 ### Dependencias Backend
+
 Instalar dentro del entorno virtual:
+```
 pip install fastapi uvicorn sqlalchemy psycopg2-binary python-dotenv
 
 pip install -r requirements.txt
@@ -109,6 +111,7 @@ pip install "pydantic<2"
 pip install pydantic-settings
 pip install python-jose
 pip install requests
+```
 ### Dependencias Frontend
 npm install react-router-dom
 npm install axios
