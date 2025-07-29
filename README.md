@@ -84,33 +84,27 @@ Convertirnos en el sistema de gestión bibliotecaria más confiable y utilizado 
    Crea un entorno virtual:
 
 
-Copiar
-Editar
 python -m venv venv
 source venv/bin/activate  # o venv\Scripts\activate en Windows
 Instala las dependencias:
 
 
-Copiar
-Editar
 pip install -r requirements.txt
 Ejecuta la aplicación:
 
 
-Copiar
-Editar
 uvicorn main:app --reload
 Abre tu navegador en:
 
 
-Copiar
-Editar
 http://localhost:8000/docs
 
 ### Dependencias Backend
 Instalar dentro del entorno virtual:
 pip install fastapi uvicorn sqlalchemy psycopg2-binary python-dotenv
+
 pip install -r requirements.txt
+
 pip install "pydantic<2"
 pip install pydantic-settings
 pip install python-jose
