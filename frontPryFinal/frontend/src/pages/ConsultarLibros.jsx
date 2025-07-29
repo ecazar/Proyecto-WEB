@@ -1,4 +1,3 @@
-// src/pages/ConsultarLibros.jsx
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
@@ -6,31 +5,56 @@ function ConsultarLibros() {
   const [libros, setLibros] = useState([])
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/libros')
-      .then(res => setLibros(res.data))
+    const token = localStorage.getItem('token')
+    if (!token) return
+
+    axios.get('http://localhost:8000/libros', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then(res => setLibros(res.data))
+    .catch(err => console.error('Error al obtener libros:', err))
   }, [])
 
   return (
-    <div>
-      <h2 className="text-2xl font-bold mb-4">Catálogo de Libros</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div className="p-4">
+      <h2 className="text-2xl font-bold mb-6 text-center">Catálogo de Libros</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {libros.map(libro => (
-          <div key={libro.isbn} className="border p-4 rounded shadow">
-            <img src={libro.portada_uri} alt={libro.titulo} className="w-full h-48 object-cover mb-2" />
-            <h3 className="font-bold">{libro.titulo}</h3>
-            <p>Autor: {libro.autor}</p>
-            <p>Páginas: {libro.paginas}</p>
-            <p>Ejemplares: {libro.ejemplares_comprados}</p>
-            <p>Disponibles: {libro.ejemplares_disponibles}</p>
+          <div
+            key={libro.isbn}
+            className="border p-4 rounded shadow flex flex-col h-full hover:shadow-lg transition-shadow"
+          >
+            <div
+              style={{
+                width: '100%',
+                height: '240px',        // altura fija uniforme
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: '#f9f9f9',
+                marginBottom: '1rem',
+                overflow: 'hidden',
+                borderRadius: '4px'
+              }}
+            >
+              <img
+                src={libro.portada_uri}
+                alt={libro.titulo}
+                style={{
+                  maxHeight: '100%',
+                  maxWidth: '100%',
+                  objectFit: 'contain'
+                }}
+              />
+            </div>
+            <h3 className="font-bold text-lg mb-1">{libro.titulo}</h3>
+            <p className="text-gray-700 text-sm mb-1">Autor: {libro.autor}</p>
+            <p className="text-gray-700 text-sm mb-1">Páginas: {libro.paginas}</p>
+            <p className="text-gray-700 text-sm mb-1">Ejemplares: {libro.total_ejemplares}</p>
+            <p className="text-gray-700 text-sm">Disponibles: {libro.disponibles}</p>
           </div>
         ))}
       </div>
-      {/* Recomendaciones */}
-      <h3 className="text-xl font-semibold mt-8 mb-2">Recomendaciones</h3>
-      <ul className="list-disc list-inside">
-        <li>Libro recomendado 1</li>
-        <li>Libro recomendado 2</li>
-      </ul>
     </div>
   )
 }

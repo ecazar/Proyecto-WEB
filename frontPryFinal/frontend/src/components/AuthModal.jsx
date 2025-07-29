@@ -1,34 +1,45 @@
+import React, { useState } from 'react';
+import { Box, Modal, TextField, Button, Typography } from '@mui/material';
+import axios from 'axios';
 
-import React, { useState } from 'react'
-import { Box, Modal, TextField, Button, Typography } from '@mui/material'
-import axios from 'axios'
-
-const AuthModal = ({ open, onClose }) => {
-  const [formData, setFormData] = useState({ id_usuario: '', password: '' })
+const AuthModal = ({ open, onClose, onLoginSuccess }) => {
+  const [formData, setFormData] = useState({ id_usuario: '', password: '' });
 
   const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData(prev => ({ ...prev, [name]: value }))
-  }
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    try {
-      const res = await axios.post('http://localhost:8000/api/login', {
-        id_usuario: formData.id_usuario,
-        password: formData.password
-      })
+    e.preventDefault();
 
-      if (res.data && res.data.success) {
-        alert('Login exitoso')
-        onClose()
+    try {
+      const res = await axios.post(
+        'http://localhost:8000/auth/login',
+        {
+          username: formData.id_usuario,
+          password: formData.password
+        },
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+
+      if (res.data && res.data.access_token) {
+        localStorage.setItem('token', res.data.access_token);
+        alert('Login exitoso');
+
+        // Llamamos al callback para actualizar App.jsx
+        onLoginSuccess(formData.id_usuario);
+
+        // Cerramos el modal
+        onClose();
       } else {
-        alert('Credenciales incorrectas')
+        alert('Credenciales incorrectas');
       }
     } catch (error) {
-      alert('Error al conectar con el servidor')
+      console.error(error);
+      alert('Error al conectar con el servidor');
     }
-  }
+  };
 
   return (
     <Modal open={open} onClose={onClose}>
@@ -38,7 +49,7 @@ const AuthModal = ({ open, onClose }) => {
         left: '50%',
         transform: 'translate(-50%, -50%)',
         width: 400,
-        bgcolor: '#1e1e1e', // Fondo oscuro del modal
+        bgcolor: '#1e1e1e',
         boxShadow: 24,
         p: 4,
         borderRadius: 2,
@@ -57,22 +68,7 @@ const AuthModal = ({ open, onClose }) => {
             margin="normal"
             required
             InputLabelProps={{ style: { color: '#bbb' } }}
-            InputProps={{
-              style: { color: 'white', borderColor: '#555' }
-            }}
-            sx={{
-              '& .MuiOutlinedInput-root': {
-                '& fieldset': {
-                  borderColor: '#555',
-                },
-                '&:hover fieldset': {
-                  borderColor: '#888',
-                },
-                '&.Mui-focused fieldset': {
-                  borderColor: '#ffcc00',
-                },
-              }
-            }}
+            InputProps={{ style: { color: 'white' } }}
           />
           <TextField
             fullWidth
@@ -84,22 +80,7 @@ const AuthModal = ({ open, onClose }) => {
             margin="normal"
             required
             InputLabelProps={{ style: { color: '#bbb' } }}
-            InputProps={{
-              style: { color: 'white', borderColor: '#555' }
-            }}
-            sx={{
-              '& .MuiOutlinedInput-root': {
-                '& fieldset': {
-                  borderColor: '#555',
-                },
-                '&:hover fieldset': {
-                  borderColor: '#888',
-                },
-                '&.Mui-focused fieldset': {
-                  borderColor: '#ffcc00',
-                },
-              }
-            }}
+            InputProps={{ style: { color: 'white' } }}
           />
           <Box mt={3}>
             <Button
@@ -109,9 +90,7 @@ const AuthModal = ({ open, onClose }) => {
               sx={{
                 backgroundColor: '#ffcc00',
                 color: '#000',
-                '&:hover': {
-                  backgroundColor: '#e6b800'
-                }
+                '&:hover': { backgroundColor: '#e6b800' }
               }}
             >
               Iniciar Sesión
@@ -120,7 +99,7 @@ const AuthModal = ({ open, onClose }) => {
         </form>
       </Box>
     </Modal>
-  )
-}
+  );
+};
 
-export default AuthModal
+export default AuthModal;

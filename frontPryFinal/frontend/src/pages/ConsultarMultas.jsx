@@ -1,12 +1,21 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
+
 function ConsultarMultas() {
   const [multas, setMultas] = useState([])
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/multas')
-      .then(res => setMultas(res.data))
+    const token = localStorage.getItem('token')
+    const userId = 1 // <- reemplaza con el id real
+
+    axios.get(`http://localhost:8000/multas/usuario/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then(res => setMultas([res.data])) // devuelve solo una multa, lo pongo en array
+    .catch(err => console.error('Error al obtener multas:', err))
   }, [])
 
   return (

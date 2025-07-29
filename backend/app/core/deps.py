@@ -7,9 +7,6 @@ from app.core.config import settings
 import requests
 
 def get_signing_key_from_jwks(token_kid, jwks_url):
-    import requests
-    from jose.utils import base64url_decode
-    from jose import jwk
 
     jwks = requests.get(jwks_url).json()
 
@@ -28,10 +25,19 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl=f"{settings.keycloak_url}/protocol
 
 async def get_current_user(token: str = Depends(oauth2_scheme)):
     try:
+        print(">> Token recibido:", token[:30], "...")  # para ver inicio del token
         token_kid = jwt.get_unverified_header(token)["kid"]
-        public_key = get_signing_key_from_jwks(token_kid, "http://localhost:8080/realms/biblioteca/protocol/openid-connect/certs")
-        payload = jwt.decode(token, public_key, algorithms=["RS256"], audience="biblioteca-api")
-        # puedes extraer "preferred_username", "sub", "email", etc.
+        public_key = get_signing_key_from_jwks(
+            token_kid,
+            "http://localhost:8080/realms/biblioteca/protocol/openid-connect/certs"
+        )
+        payload = jwt.decode(
+            token,
+            public_key,
+            algorithms=["RS256"],
+            options={"verify_aud": False}  # 🔹 Ignora el audience
+        )
         return payload
     except JWTError as e:
+        print(">> Error decodificando token:", e)
         raise HTTPException(status_code=401, detail="Token inválido o expirado")

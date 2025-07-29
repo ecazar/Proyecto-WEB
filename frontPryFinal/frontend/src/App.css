@@ -40,3 +40,11 @@
 .read-the-docs {
   color: #888;
 }
+
+.book-cover {
+  display: block;
+  max-width: 100%;
+  max-height: 240px; /* altura máxima uniforme */
+  object-fit: contain; /* mantiene proporciones sin recortar */
+  margin: 0 auto 1rem auto; /* centrado y margen inferior */
+}
