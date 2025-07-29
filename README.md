@@ -83,31 +83,46 @@ Convertirnos en el sistema de gestión bibliotecaria más confiable y utilizado 
 
    Crea un entorno virtual:
 
-bash
+
 Copiar
 Editar
 python -m venv venv
 source venv/bin/activate  # o venv\Scripts\activate en Windows
 Instala las dependencias:
 
-bash
+
 Copiar
 Editar
 pip install -r requirements.txt
 Ejecuta la aplicación:
 
-bash
+
 Copiar
 Editar
 uvicorn main:app --reload
 Abre tu navegador en:
 
-bash
+
 Copiar
 Editar
 http://localhost:8000/docs
-🧠 Contribuciones
+
+### Dependencias Backend
+Instalar dentro del entorno virtual:
+pip install fastapi uvicorn sqlalchemy psycopg2-binary python-dotenv
+pip install -r requirements.txt
+pip install "pydantic<2"
+pip install pydantic-settings
+pip install python-jose
+pip install requests
+### Dependencias Frontend
+npm install react-router-dom
+npm install axios
+npm install @mui/material @emotion/react @emotion/styled
+
+## 🧠 Contribuciones
 ¡Las contribuciones son bienvenidas! Si deseas proponer mejoras, por favor abre un issue o haz un pull request.
 
-© Bibliotek One - 2025
+
+``` © Bibliotek One - 2025
 Una solución universitaria inteligente para la gestión de bibliotecas.
